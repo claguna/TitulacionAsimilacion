@@ -1,0 +1,267 @@
+\chapter{Desarrollo}
+
+\section{Obtener datos satelitales y lecturas pluviom'etricas}
+
+  La  \textit{National Oceanic and Atmospheric Administration} (NOAA) es una agencia federal Estadounidense que se encarga de 
+  monitorear las condiciones oceanicas y atmosf'erica por medio de sus sat'elites.
+  En particular los sat'elites geoestacionarios GOES 11 y 12 toman im'agenes en infrarrojo de las nubes que est'an sobre
+  el territorio Mexicano.
+
+  Para 'este proyecto pedimos a la NOAA que nos proporcionara informaci'on de una zona amplia del sur del pa'is en 
+  intervalos de tiempo, en los cuales, se presentaron fen'omenos de importancia de inundaciones en la zona de Tabasco.
+
+  La \textit{Comisi'on Federal de Electricidad} (CFE) posee una serie de estaciones de medici'on puvliom'etricas que registran 
+  la lluvia que cae sobre la estaci'on en cada hora. El portal de la CFE permite acceder a las estaciones deseadas 
+  y a las fechas disponibles. Desafortunadamente la informaci'on que provee la Comisi'on es limitada y en muchas 
+  ocasiones incorrecta o incosistente.
+
+
+
+
+\section{Dise\~no de la apliaci'on en C++/Fortran}
+  %Porque se decidio usar C y Fortran
+  Las aplicaciones que realizan c'alculos num'ericos complejos requieren que la velocidad de respuesta sea la m'inima posible y que
+  la programaci'on de las mismas sea lo m'as sencilla.
+
+  Hist'oricamente Fortran ha servido al mundo cient'fico para modelar sistemas complejos, su sint'axis, 
+  muy similar al lenguaje matem'atico, lo hace sumamente atractivo para desarrollar aplicaciones num'ericas. Sin embargo,
+  es su alta especializaci'on lo que permite al compilador hacer optimizaciones eficientes en el c'odigo, produciendo
+  programas muy r'apidos.
+
+  Por otra parte, C/C++ es un lenguaje de prop'osito general que permite al programador trabajar r'apidamente en tareas que requieren
+  el uso de estructuras de datos y acceso a los servicios del sistema operativo. 
+  En particular, el manejo de archivos, memoria y hacer conexiones a bases de datos.
+
+  La combinaci'on de ambos lenguajes se realiza mediante la definici'on de m'etodos externos de C. De 'esta manera, es posible
+  usar lo mejor de estos lenguajes obteniendo resultados eficientes usando una programaci'on sencilla.
+
+  %Uso de un IDE
+
+  Los entornos de desarrollo integrados (EDI) son herramientas sumamente 'utiles en la implementaci'on de proyectos de software.
+  Los EDI son aplicaci'ones que consisten de un editor de c'odigo, un compilador, un depurador y una interfaz gr'afica.
+
+  Para 'este proyecto se adopt'o Netbeans en su versi'on 7 pues es uno de los EDI m'as aceptados y f'aciles de usar. La integraci'on
+  que posee con C y Fortran es limpia y sencilla.
+
+  %uso de gitHub
+  En cualquier proyecto de desarrollo de software es indispensable contar con un control de versiones del c'odigo. En particular,
+  se opt'o por usar GitHub pues provee de una plataforma web robusta y sobre todo segura. Para 'este proyecto se uso un repositorio
+  privado que garantiza que s'olo los colaboradores autorizados puedan ver y modificar el c'odigo.
+
+  %Documentación usando doxygen
+  La documentaci'on precisa del c'odigo se realiz'o mediante la herramienta doxygen. 'Esta herramienta sirve para generar
+  documentaci'on autom'aticamente mediante el uso de comentarios especiales en el c'odigo. El producto final es una p'agina web, un manual 
+  que puede ser visto con el comando man de UNIX y un documento PDF que detallan cada archivo, funciones y modulos usados en el sistema.
+  
+
+  Finalmente, existen dos bibliotecas que son utilizadas para realizar consultas
+  a bases de datos MySQL. Una de ellas est'a implementada en C++ y la otra en C.
+  Se eligi'o la biblioteca mysqlclient implementada en C por su facilidad de uso.
+
+\subsection{Estandarizaci'on de la informaci'on}
+  %Mallas artificiales
+  Uno de los primeros problemas al manejar la informaci'on del sat'elite fue la naturaleza de la informaci'on 
+  misma. 
+
+  Los sat'elites GOES 11 y 12 entregaban im'agenes con resoluciones diferentes y, por lo tanto, puntos 
+  diferentes para la misma hora; m'as a'un, las im'agenes no presentaban necesariamente una forma regular.
+
+  El primer paso para manejar de manera confiable la informaci'on fue realizar un pre-proceso de la misma
+  de tal manera que se contara con im'agenes consistentes y regulares.
+
+  La soluci'on adoptada fue dividir el territorio nacional en intervalos establecidos para generar una malla regular
+  a la cual se podía ajustar la informaci'on de los satélites.
+
+  Una vez definida la malla, se subi'o su informaci'on a la base de datos para poder obtener 
+  de manera din'amica los puntos que se deben considerar para cualquier poligono. 
+
+  El siguiente paso fue implementar un algoritmo de interpolaci'on que tomara una im'agen satelital arbitraria y 
+  ajustara su informaci'on a una malla contenedora.
+
+  C'omo se ilustra en la Figura 2.1, la informaci'on del satélite puede ser muy irregular. Para resolver el problema 
+  envolvemos la im'agen en la malla e interpolamos la informaci'on. Las zonas para las cuales no hay datos disponibles
+  son rellenadas de valores -1 (Se acord'o que un valor negativo para las lluvias sería un buen indicador de que no hay
+  informaci'on).
+
+  %%Hacer una imagen de como podría estar la imágen satelital y como se encierra dicha im'agen en una malla artificial
+  \begin{figure}[h!]
+  \centering
+  \includegraphics[width=120mm,bb=0 0 502 388]{./imagenes/malla.jpg}
+  % malla.jpg: 502x388 pixel, 72dpi, 17.71x13.69 cm, bb=0 0 502 388
+  \caption{Interpolaci'on de las imagenes satelitales}
+  \end{figure}
+
+  El programa de interpolaci'on fue implementado en Fortran mientras que las subrutinas para 
+  pedir la malla adecuada a la base de datos fue implementada en C.
+
+\subsection{Descripci'on del argoritmo STAR}
+  El algoritmo STAR se encarga de transformar las temperaturas registradas por los sat'elites y las convierte
+  en una primer estimaci'on pluvial. Recibe como entrada una matr'iz de temperaturas y para cada punto $p$ de la matr'iz
+  obtiene una vecindad de radio $50$ alrededor del punto. Para 'esta vecindad calcula la media $prom$ y la desviaci'on estandard $\sigma$.
+
+  Usando 'esta informaci'on se calculan dos 'indices llamados $RRn$ y $RRc$ que finalmente son utilizados por el algoritmo STAR
+
+  \begin{algorithm}
+  \caption{C'alculo del 'indice RRc}
+
+  \begin{algorithmic}
+  \IF {$temperatura \geq 201$}
+	  \STATE $rrc \gets 1.1183* (100000000000.0)^(-0.036382*temperatura^{1.2})$
+  \ELSE
+	  
+	  \STATE $rrc \gets 72$ \COMMENT{m'aximo valor de lluvia posible}
+	  
+  \ENDIF 
+  \end{algorithmic}
+  \end{algorithm}
+
+  \begin{algorithm}
+  \caption{C'alculo del 'indice RRn}
+
+  \begin{algorithmic}
+  \IF {$temperatura \geq 250$}
+	  \STATE $rrn \gets 0$
+  \ELSE
+	  
+	  \STATE $rrn \gets min(\frac{250-temp}{5}, 12)$ 
+	  
+  \ENDIF 
+  \end{algorithmic}
+  \end{algorithm}
+
+  \begin{algorithm}
+  \caption{Algoritmo STAR}
+
+  \begin{algorithmic}
+  \FOR{cada punto en la imagen}
+      \STATE $vecindad \gets VecindadRadio50(x,y)$
+      \STATE $prom \gets Promedio(vecindad)$
+      \STATE $sigma \gets Desviacion(vecindad)$  
+      \STATE $rrc \gets ComputarRRc((x,y).precipitacion)$
+      \STATE $rrn \gets ComputarRRn((x,y).precipitacion)$
+      \STATE $z = min(\frac{prom-(x,y).precipitacion}{sigma}, 1.5)$
+      \IF { $z > 0$}
+	\STATE $rr = \frac{rrc*z^2 + rrn*(1.5-z)^2}{z^2+ (1.5-z)^2}$
+      \ELSE	  
+	\STATE $rr = 0$   
+      \ENDIF
+    \ENDFOR
+  \end{algorithmic}
+  \end{algorithm}
+
+
+\subsection{Descripci'on e implementaci'on del algoritmo Asimilaci'on}
+
+\subsection{Productos generados}
+%archivo de precipitacion .debug
+\subsubsection*{Archivo de lluvia}
+El programa genera un archivo con terminaci'on .debug que contiene la informaci'on calculada de las lluvias.
+'Este archivo puede ser leído por programas de graficaci'on como gnuplot y matlab para su análisis.
+
+En la Figura 2.2 podemos observar un ejemplo de un archivo .debug. 'Este archivo
+consta de una cabecera que define las esquinas de la im'agen y una lista de vectores (x, y, precipitación). La
+lista de vectores definen una matriz regular ordenada por renglones.
+
+\begin{figure}[h!]
+ \centering
+ \includegraphics[width=170mm,bb=0 0 677 262]{./imagenes/archivodebug.jpg}
+ % archivodebug.jpg: 677x262 pixel, 72dpi, 23.88x9.24 cm, bb=0 0 677 262
+ \caption{Archivo de lluvia}
+\end{figure}
+
+\subsubsection*{Archivo de estimaci'on puntual}
+%archivo de estimaci'on puntual
+El archivo de estimaci'on puntual describe el comportamiento de los 2 algoritmos de estimaci'on pluvial y los compara
+contra la precipitaci'on real reportada por las estaciones de la CFE.
+
+El archvio de estimaci'on puntual es un archivo .csv que contiene los siguientes campos por estaci'on: 
+\textbf{Nombre de la estaci'on, longitud, latitud , Valor real, Valor rain rate, Valor asimilado}
+
+El objetivo de 'esta tabla consiste en generar inicialmente diagramas de dispersi'on como el mostrado en la Figura 2.3:
+
+\begin{figure}[h!]
+ \centering
+ \includegraphics[width=170mm,bb=0 0 837 507]{./imagenes/archivoErrorAnalysis.jpg}
+ % archivoErrorAnalysis.jpg: 837x507 pixel, 72dpi, 29.53x17.89 cm, bb=0 0 837 507
+ \caption{Diagrama de dispersi'on}
+\end{figure}
+
+En la figura 2.3 se muestra un diagrama de dispersi'on de las predicciones realizadas en cada paso ejecutado por el sistema.
+En el eje ${y}$ se representa la precipitaci'on en una hora en particular, 
+en el eje $x$ son representadas las estaciones que caen dentro de un poligono
+determinado.
+
+
+%archivo de error sigma desv esta
+
+
+\section{Dise\~no de la base de datos}
+
+El dise\~no de la base de datos geogr'afica responde a una serie de requerimientos operativos:
+\begin{itemize}
+ \item Debe guardar cada punto en su contexto espacial y temporal.
+ \item Debe guardar la informaci'on de las estaciones de la CFE en su contexto espacial y temporal
+ 
+\end{itemize}
+
+
+\section{Dise\~no de la p'agina web}
+%Primefaces y JSF
+En la actualidad las arquitecturas de software m'as aceptadas y adoptadas en 
+el desarrollo web implementan la arquitectura llamada Modelo-Vista-Controlador (MVC).
+
+La arquitectura MVC intenta aislar tres componentes importantes en el desarrollo
+de una aplicaci'on web:
+
+\begin{itemize}
+ \item \textbf{Modelo:} Administra el comportamiento y los datos de la aplicaci'on mediante peticiones (usualmente de la vista).
+\item \textbf{Vista:} Permite acceder e interaccionar con el modelo mediante una interfaz f'acil de usar.
+\item \textbf{Controlador: } Recibe entradas del usuario e inicia la respuesta correspondiente haciendo llamadas al controlador.
+\end{itemize}
+
+Uno de los marcos de trabajo m'as ampliamente usados que implementan la arquitectura MVC es Java Server Faces (JSF). En JSF las
+peticiones del usuario son procesadas por un servidor que carga la vista apropiada, crea el 'arbol de componentes de la vista y
+procesa sus eventos. El estado de los componentes de la vista son guardados al final de una petici'on s'incrona o as'incrona al servidor.
+
+El usuario final experimenta una experiencia visual m'as eriquecedora mediante las llamadas as'incronas al servidor que atienden
+respuestas en tiempo real en el momento en que se interact'ua con la aplicaci'on. El valor agregado de JSF es la existencia de otros
+marcos de trabajo que incrementan la calidad visual de los componentes de la vista, tal es el caso de PrimeFaces.
+
+La p'agina web del presente proyecto se implement'o usando JSF y PrimeFaces para lograr una experiencia visual 'optima
+para que la aplicaci'on sea f'acil de usar y atractiva visualmente.
+
+\begin{figure}[!ht]
+ \centering
+ \includegraphics[width=180mm]{./imagenes/pagWeb.jpg}
+ % pagWeb.png: 1425x789 pixel, 72dpi, 50.26x27.83 cm, bb=0 0 1425 789
+ \caption{http://132.248.17.180:8080/AsimilacionLluvias/}
+\end{figure}
+
+
+La p'agina web permite seleccionar el rango de tiempo en donde se va a ejecutar el algoritmo. Se us'o Google Maps
+para ilustrar la distribuci'on geogr'afica de las estaciones y la selecci'on de un poligono definido por el usuario.
+La p'agina principal permite al usuario incluir las estaciones de cuencas disponibles para forzar que 
+sean consideradas en la correci'on num'erica. 
+
+El sistema requería de un m'odulo de administraci'on de la base de datos geogr'afica que permitiera:
+\begin{itemize}
+ \item Subir nueva informaci'on satelital.
+  \item Subir nueva informaci'on de los mapas de precipitaci'on inicial.
+  \item Subir informaci'on de lecturas de estaciones pluviales.
+  \item Modificar la informaci'on de las estaciones.
+\end{itemize}
+
+La opci'on ideal para implementar 'este m'odulo de administraci'on fue integrarlo a la p'agina web
+para que la administraci'on sea posible desde cualquier parte del mundo.
+
+
+\section{Pruebas de confiabilidad}
+%Análisis puntual de los datos de las estaciones
+El algoritmo que utiliza los valores de las estaciones de la CFE permite generar un mapa de lluvias dentro de un poligono
+determinado. La selección del poligono determina qu'e estaciones se deber'an usar para computar la correcci'on num'erica.
+
+Estas premisas dan pie a analizar de manera puntual como se ha ido corrigiendo las estimaciones pluviales al aplicar
+consecutivamente los algoritmos, es decir, mediante interpolaciones num'ericas nos fue posible comparar la precipitaci'on
+real reportada por las estaciones de la CFE, contra el resultado del algoritmo STAR y el resultado de la Asimilaci'on.
+
+%%Pensar como se analizarán los resultados (preguntar a antonio)

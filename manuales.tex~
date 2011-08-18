@@ -1,0 +1,37 @@
+\chapter{Manuales de uso e instalaci'on}
+
+\section{Dependencias}
+Las dependencias del sistema pueden clasificarse en dos tipos:\\
+%Compilación
+\textbf{Compilaci'on} 
+\\
+Para compilar el programa es necesario tener instalados los siguientes programas:
+\begin{itemize}
+ \item g+
+  \item fortran
+  \item Biblioteca mysqlconnector para C  
+\end{itemize}
+
+\\
+%Operación
+\textbf{Operaci'on} 
+
+\begin{itemize}
+ \item Paquete de programas grads version 2.0.a7.1 o superior.
+  \item Apache tomcat 7 o superior o algún otro servidor web que soporte JSF y PrimeFaces.
+  \item convert. Este programa es usado para transformar las im'agenes de lluvias en jpeg.
+\end{itemize}
+
+\section{Instalaci'on}
+%uso del instalador del programa en C++ / Fortran
+Se gener'o un instalador en bash que permite configurar el entorno y verificar las dependencias para poder compilar
+el programa.
+%ínstalación de la página web
+
+\section{Preparaci'on de la Base de Datos}
+%Razones para usar MySQL sobre PostgreSQL
+
+%Correr los scripts
+
+\section{Uso de la aplicaci'on}
+

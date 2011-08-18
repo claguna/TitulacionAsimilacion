@@ -1,0 +1,95 @@
+% portada.tex-- Portada para tesis de posgrado de la Facultad de Ingeniería. UNAM.
+% Realizada por Gengis Kanhg Toledo Ramírez (gengiskanhg.geo@yahoo.com)
+%Basada en la portada escrita por: Tim Rohrer, LT, USN--31 July 1996 del NPS, Monterey, California. USA.
+%y en el manual The Not So Short Introduction to LaTeX de Tobiaz Oetiker
+%Eres libe de modificar este archivo de acuerdo a tus necesidades.
+%13 de Junio de 2007
+
+%Compile with:
+%pdflatex portada.tex
+
+\documentclass{book}
+\usepackage[latin1]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage{graphicx}
+
+\setlength{\voffset}{-0.5cm}
+\setlength{\hoffset}{0.7cm}
+\setlength{\headsep}{0pt}
+\setlength{\headheight}{0pt}
+\setlength{\oddsidemargin}{-0.8in}
+\setlength{\marginparwidth}{-0.5cm}
+\setlength{\textwidth}{19.5cm}
+\setlength{\footskip}{2pt}
+\setlength{\topmargin}{0in}
+\setlength{\textheight}{25cm}
+\setlength{\fboxrule}{3pt}
+
+\begin{document}
+\thispagestyle{empty}
+
+\begin{tabular}{p{3cm}p{15.0cm}}
+\includegraphics[width=3cm]{imagenes/UNAM_logo.jpg}
+\begin{center}
+\rule[2cm]{1.5mm}{13.5cm}%vertical
+\hspace{2pt}
+\rule[0cm]{0.7mm}{15.5cm}%vertical
+\hspace{2pt}
+\rule[2cm]{1.5mm}{13.5cm}%vertical
+\end{center}
+\includegraphics[width=2.8cm]{imagenes/Fciencias_logo.png}
+&
+\vspace{-3.4cm}
+\begin{center}
+\large{ \bf{UNIVERSIDAD NACIONAL AUTONOMA DE M\'EXICO}}
+\\
+\rule[0mm]{15.0cm}{0.2mm}%horizontal
+\\
+\rule[3mm]{15.0cm}{1.2mm}%horizontal
+\\
+\textbf{FACULTAD DE CIENCIAS}
+
+\vspace{2.8\baselineskip}
+
+\vspace{2.8\baselineskip}
+
+{\Large \bf{IMPLEMENTACI\'ON DE UN MODELO DE ESTIMACI\'ON DE PRECIPITACI\'ON PLUVIAL}}
+
+%\vfill
+\vspace*{1.7cm}
+
+\huge{\bf REPORTE DE \\SERVICIO SOCIAL}
+
+\vspace*{1.5cm}
+{\large QUE PARA OBTENER EL T\'ITULO DE:}
+
+\vspace*{1.5cm}
+
+\LARGE{\bf LICENCIADO EN CIENCIAS DE LA COMPUTACI\'ON}
+
+
+\vspace*{0.8cm}
+P R E S E N T A:
+
+\vspace*{.5cm} {\Large \bf{CARLOS ABRAHAM LAGUNA RUEDA$^{*}$}}
+
+\vspace*{1.0cm}
+TUTOR:\\
+\vspace*{0.5cm}
+\large{\bf ANTONIO CAPELLA KORT}
+
+\vspace*{1.5cm}
+\Large{Ciudad Universitaria}\hspace*{5cm}\Large{2011}
+
+\end{center}
+
+\end{tabular}
+
+\flushright{$^{*}$Exbecario Instituto de Matem\'aticas\hspace*{0.8cm}}
+
+%\end{center}
+\newpage
+\thispagestyle{empty}
+
+$ $
+\end{document}

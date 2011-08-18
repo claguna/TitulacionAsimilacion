@@ -1,0 +1,28 @@
+ \chapter*{Hoja de datos del jurado}
+
+\begin{center}
+ 
+
+
+\begin{tabular}{|l|}
+
+\hline 
+\textbf{ 1. Datos del alumno}\\ Laguna \\Rueda\\Carlos Abraham\\53422749\\
+Universidad Nacional Aut'onoma de M'exico\\Facultad de Ciencias\\Ciencias de la Computaci'on\\
+303088682  \tabularnewline
+\hline
+
+\hline 
+\textbf{2. Datos del tutor}\\ Dr. Antonio\\Capella\\Kort\tabularnewline
+\hline 
+
+\tabularnewline
+\hline 
+\tabularnewline
+\hline 
+\tabularnewline
+\hline 
+\tabularnewline
+\hline
+\end{tabular}
+\end{center}

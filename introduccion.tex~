@@ -1,0 +1,51 @@
+\chapter{Introducci'on}
+\section{Antecedentes}
+El proyecto de 'este servicio social nace de un convenio entre el Instituto de Matem'aticas y el Instituto de Ingenier'ia.
+....
+\section{Objetivo}
+Mi participaci'on en 'este proyecto consiste en dise\~nar un sistema de informaci'on geogr'afica para poder obtener
+ informaci'on sobre las precipiaciones que caen en la zona sur del pa'is.
+
+\section{C'omputo cient'ifico}
+
+Las Ciencias de la Computaci'on son el estudio de los fundamentos te'oricos de la informaci'on, el c'omputo y el 
+desarrollo de t'ecnicas pr'acticas para la implementaci'on y aplicaci'on de las mismas en sistemas computacionales.
+Las Ciencias de la Computaci'on tienen un amplio n'umero de ramas como la complejidad computacional, dise\~no de algoritmos,
+graficaci'on por computadora, teor'ia de lenguajes de programaci'on, interacci'on humano-m'aquina, etc.
+
+El C'omputo Cient'ifico, o ciencias computacionales, es una rama aplicada de las Ciencias de la Computaci'on 
+que tiene el fin de estudiar y contruir modelos 
+matem'aticos y t'ecnicas de an'alisis cuantitativo usando computadoras para resolver problemas cient'ificos. En forma
+pr'actica, la aplicaci'on principal del c'omputo cient'ifico es la simulaci'on de fen'omenos naturales.
+
+Algunas de las principales aplicaciones de las Ciencias Computacionales es en el An'alisis Num'erico, la F'isica y Qu'imica
+Computacional y la Bioinform'atica.
+
+
+En la siguiente secci'on vamos a introducir una de las aplicaciones m'as importantes de las Ciencias de la Computaci'on, las Ciencias Computacionales, la Ingenier'ia de Software, 
+el Diseño de Bases de Datos y los Lenguajes de Programaci'on: 
+Los Sistemas de Informaci'on Geogr'aficos.
+
+
+\section{Sistemas de informaci'on geogr'aficos}
+Los sitemas de informaci'on geogr'aficos (SIG) son sistemas dise\~nados para capturar, guardar, manipular, analizar,
+administrar y presentar todo tipo de informaci'on geogr'afica con el fin de ser una herramienta que ayude en la toma
+de desiciones.
+
+Los SIG y el an'alisis espacial de datos se ocupan de cuantificar caracter'isticas importantes de objetos
+as'i como las propiedades y atributos de las mismas. Por ejemplo, podemos caracterizar las propiedades del Monte 
+Everest como su posici'on y altura.
+
+EL dise\~no de un sistema SIG permite al usuario decidir que caracter'isticas son m'as importantes para el estudio 
+de un problema. Por ejemplo, en el estudio de las zonas forestales es de importancia la precipitaci'on, el uso que 
+se le da al suelo que rodea una zona forestal, la existencia de f'abricas u otros medios de contaminaci'on, etc. 
+La correcta administraci'on de una zona forestal debe considerar 'estos factores y, tal v'ez con mayor importancia,
+la distribuci'on espacial de los mismos.
+
+Originalmente los SIG se localizaban principalmente en computadoras de gran capacidad y se utilizaban para mantener
+registros muy especializados a los que poca gente pod'ia acceder. 
+Sin embargo, con el crecimiento de Internet y el poder de c'omputo, 'estos sistemas se han puesto a la mano de 
+la poblaci'on en general que requiere de medios de informaci'on confiables para realizar sus labores diarias.
+
+Por otra parte, 'estos sistemas han tomado mayor importancia en el estudio de fen'omenos meteorol'ogicos como las
+lluvias, huracanes, tormentas y otros eventos clim'aticos.

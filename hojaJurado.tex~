@@ -1,0 +1,30 @@
+ \textbf{Hoja de datos del jurado}
+
+\begin{center}
+ 
+
+
+\begin{tabular}{|l|}
+
+  \hline 
+  \textbf{ 1. Datos del alumno}\\ Laguna \\Rueda\\Carlos Abraham\\53 42 27 49\\
+  Universidad Nacional Aut'onoma de M'exico\\Facultad de Ciencias\\Ciencias de la Computaci'on\\
+  303088682  \tabularnewline
+  \hline
+  \textbf{2. Datos del tutor}\\ Dr. Antonio\\Capella\\Kort\tabularnewline
+  \hline    
+  \textbf{3. Datos del Sinodal 1}\\ Dr. Antonio\\Capella\\Kort\tabularnewline
+  \hline 
+
+  \textbf{4. Datos del Sinodal 2}\\ Dr. Antonio\\Capella\\Kort\tabularnewline
+  \hline 
+  \textbf{5. Datos del Sinodal 3}\\ Dr. Antonio\\Capella\\Kort\tabularnewline
+  \hline 
+  \textbf{6. Datos del Sinodal 4}\\ Dr. Antonio\\Capella\\Kort\tabularnewline
+  \hline
+  \textbf{7. Datos del trabajo escrito}\\
+  Implementaci'on de un modelo de estimaci'on de precipiaci'on pluvial \\
+  n p'aginas\\2011\tabularnewline
+  \hline
+\end{tabular}
+\end{center}
