@@ -4,7 +4,7 @@ THESISFILE = tesis.tex
 THESISPDF = TitulacionSS.pdf
 .PHONY: dvi pdf clean
 
-all:cover thesispdf concatpdf	
+all:cover thesispdf concatpdf
 
 thesispdf:
 	pdflatex $(THESISFILE) 
@@ -15,12 +15,12 @@ clean:
 	*.log \
 	*.out \
 	*.dvi \
-	*.pdfs \
+	*.pdf \
 	*.ps	
 
 cover:
 	pdflatex $(COVERFILE) 	
 	
 concatpdf:
-	gs -dBATCH -dNOPAUSE -q -sDEVICE=pdfwrite -sOutputFile=$(THESISPDF)  $(COVERFILE:.tex=.pdf) \
+	gs -dNOCACHE -dBATCH -dNOPAUSE -q -sDEVICE=pdfwrite -sOutputFile=$(THESISPDF)  $(COVERFILE:.tex=.pdf) \
 	$(THESISFILE:.tex=.pdf) 

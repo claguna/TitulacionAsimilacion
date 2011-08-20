@@ -10,6 +10,18 @@
   Para 'este proyecto pedimos a la NOAA que nos proporcionara informaci'on de una zona amplia del sur del pa'is en 
   intervalos de tiempo, en los cuales, se presentaron fen'omenos de importancia de inundaciones en la zona de Tabasco.
 
+  Es necesario que se procese la información que se descarga directamente de los servidores de la NOAA. Para ello se usa
+  una aplicaci'on llamada \textit{NOAAA Weather and Climate Toolkit} para generar archivos de texto plano que contienen
+  toda la informaci'on de cada punto le'ido.
+
+  \begin{figure}[h!]
+  \centering
+  \includegraphics[width=170mm]{./imagenes/archivoTxt.png}
+  % archivoTxt.png: 721x512 pixel, 72dpi, 25.43x18.06 cm, bb=0 0 721 512
+  \caption{Archivo de informaci'on satelital en texto plano}
+  \end{figure}
+
+
   La \textit{Comisi'on Federal de Electricidad} (CFE) posee una serie de estaciones de medici'on puvliom'etricas que registran 
   la lluvia que cae sobre la estaci'on en cada hora. El portal de la CFE permite acceder a las estaciones deseadas 
   y a las fechas disponibles. Desafortunadamente la informaci'on que provee la Comisi'on es limitada y en muchas 
@@ -179,7 +191,7 @@ lista de vectores define una matr'iz regular ordenada por renglones.
 
 \begin{figure}[h!]
  \centering
- \includegraphics[width=170mm,bb=0 0 677 262]{./imagenes/archivodebug.jpg}
+ \includegraphics[width=160mm,bb=0 0 677 262]{./imagenes/archivodebug.jpg}
  % archivodebug.jpg: 677x262 pixel, 72dpi, 23.88x9.24 cm, bb=0 0 677 262
  \caption{Archivo de lluvia}
 \end{figure}
@@ -196,7 +208,7 @@ El objetivo de 'esta tabla consiste en generar inicialmente diagramas de dispers
 
 \begin{figure}[h!]
  \centering
- \includegraphics[width=170mm,bb=0 0 837 507]{./imagenes/archivoErrorAnalysis.jpg}
+ \includegraphics[width=170mm,bb=0 0 837 507]{./imagenes/archivoErrorAnalysis.png}
  % archivoErrorAnalysis.jpg: 837x507 pixel, 72dpi, 29.53x17.89 cm, bb=0 0 837 507
  \caption{Diagrama de dispersi'on}
 \end{figure}
@@ -208,6 +220,41 @@ determinado.
 
 
 %archivo de error sigma desv esta
+\subsubsection*{Mapas de lluvia}
+
+Para poder presentar una im'agen de la estimaci'on pluvial probamos diferentes programas de graficaci'on, entre los cuales
+destacan gnuplot y grads.
+
+Se eligió usar GrADS, dise\~nado originalmente por \textit{ NASA Advanced Information Systems Research Program}, 
+pues es un programa de propósito específico para manipular y visualizar datos generados por las Ciencias 
+de la Tierra. Por otra parte, gnuplot es un programa de uso generar para graficar gran variedad de datos cient'ificos, lo cual
+lo hace poco eficiente para graficar nuestra informaci'on, en particular, el uso de curvas de nivel fue privativo en tiempo
+de ejecuci'on y en nivel de detalle de la im'agen.
+
+Se puede apeciar en la figura que GrADS nos permite integrar la informaci'on de ubicaci'on y estado de las estaciones,
+mostrando en rojo las estaciones que no poseen informaci'on, en verde las que si la poseen y en amarillo las que 
+tienen informaci'on incompleta.
+
+Directamente la im'agen generada por GrADS es un archivo eps \textit{Encapsulated PostScript}, sin embargo a pesar de la buena calidad
+de las im'agenes eps, se debi'o convertir en formato jpg para conservar la compatibilidad con los navegadores web.
+
+\begin{figure}[h!]
+ \centering
+ \includegraphics[width=140mm]{./imagenes/2007_10_17_1.jpg}
+ % 2007_10_17_01.eps.jpg: 719x555 pixel, 72dpi, 25.36x19.58 cm, bb=0 0 719 555
+ \caption{Im'agen generada por GrADS de la ventana completa de datos}
+\end{figure}
+
+La generaci'on de im'agenes fue de vital importancia para poder notar detalles desicivos entre una cantidad enorme de datos.
+El uso de im'agenes nos permiti'o observar que las im'agenes satelitales que provee la \textit{NOAA} abarcaban una zona mucho
+m'as peque\~na que la que se solicit'o.
+
+\begin{figure}[h!]
+ \centering
+ \includegraphics[width=140mm]{./imagenes/2007_10_17_2.jpg}
+ % 2007_10_17_01.eps.jpg: 719x555 pixel, 72dpi, 25.36x19.58 cm, bb=0 0 719 555
+ \caption{Im'agen generada por GrADS de la ventana completa de datos con informaci'on faltante}
+\end{figure}
 
 
 \section{Dise\~no de la base de datos}
@@ -216,8 +263,33 @@ El dise\~no de la base de datos geogr'afica responde a una serie de requerimient
 \begin{itemize}
  \item Debe guardar cada punto en su contexto espacial y temporal.
  \item Debe guardar la informaci'on de las estaciones de la CFE en su contexto espacial y temporal
- 
+ \item Debe guardar la informaci'on de precipitaci'on en cada punto.
 \end{itemize}
+
+En la Figura ... se muestra el diseño de la base de datos.
+
+\begin{figure}[h!]
+ \centering
+ \includegraphics[width=150mm]{./imagenes/DataBase.jpg}
+ % DataBase.jpg: 651x396 pixel, 72dpi, 22.97x13.97 cm, bb=0 0 651 396
+ \caption{Dise\~no de la Base de Datos Geogr'afica}
+\end{figure}
+
+El desempe\~no de la base de datos se ve mejorada ampliamente mediante el uso de 'indices. El incremento en la
+velocidad de acceso a la informaci'on se logra mediante la aplicaci'on de 'indices en los campos en donde
+se hacen las búsquedas m'as frecuentes.
+
+En 'este proyecto se relizaron 'indices sobre diferentes tablas:
+\begin{itemize}
+ \item 'Indice sobre el campo \textit{fecha} en la tabla \textit{LecturaTierra}
+  \item 'Indice sobre el campo \textit{id\_ventana} en la tabla \textit{PuntosVentana}
+  \item 'Indice sobre el campo \textit{fecha} en la tabla \textit{Interpoltxt}
+  \item 'Indice sobre el campo \textit{fecha} en la tabla \textit{Calculo}
+  \item 'Indice sobre el campo \textit{id\_ventana} en la tabla \textit{Calculo}
+  \item 'Indice geogr'afico sobre el campo \textit{punto} en la tabla \textit{Estacion}
+  \item 'Indice geogr'afico sobre el campo \textit{punto} en la tabla \textit{PuntosVentana}
+\end{itemize}
+
 
 
 \section{Dise\~no de la p'agina web}

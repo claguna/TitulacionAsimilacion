@@ -10,6 +10,18 @@
   Para 'este proyecto pedimos a la NOAA que nos proporcionara informaci'on de una zona amplia del sur del pa'is en 
   intervalos de tiempo, en los cuales, se presentaron fen'omenos de importancia de inundaciones en la zona de Tabasco.
 
+  Es necesario que se procese la información que se descarga directamente de los servidores de la NOAA. Para ello se usa
+  una aplicaci'on llamada \textit{NOAAA Weather and Climate Toolkit} para generar archivos de texto plano que contienen
+  toda la informaci'on de cada punto le'ido.
+
+  \begin{figure}[h!]
+  \centering
+  \includegraphics[width=170mm,bb=0 0 721 512]{./imagenes/archivoTxt.png}
+  % archivoTxt.png: 721x512 pixel, 72dpi, 25.43x18.06 cm, bb=0 0 721 512
+  \caption{Archivo de informaci'on satelital en texto plano}
+  \end{figure}
+
+
   La \textit{Comisi'on Federal de Electricidad} (CFE) posee una serie de estaciones de medici'on puvliom'etricas que registran 
   la lluvia que cae sobre la estaci'on en cada hora. El portal de la CFE permite acceder a las estaciones deseadas 
   y a las fechas disponibles. Desafortunadamente la informaci'on que provee la Comisi'on es limitada y en muchas 
@@ -149,8 +161,23 @@
   \end{algorithmic}
   \end{algorithm}
 
+Es importante mencionar que 'este proceso se ejecuta para cada lectura del sat'elite. Es posible que se tengan 3 o 4 lecturas por hora. El algoritmo 
+Asimilaci'on requiere que se tenga una sola lectura por hora. Es entonces que se debi'o realizar un promedio de los archivos si se tienen dos lecturas y 
+ejecutar un algoritmo trimean cuando se tengan 3 lecturas. De 'esta manera se conserva el mejor valor posible para cada hora.
 
 \subsection{Descripci'on e implementaci'on del algoritmo Asimilaci'on}
+El algoritmo Asimilaci'on realiza una serie de pasos que se detallan a continuaci'on:
+\begin{enumerate}
+ \item Descargar la malla predefinida para el pol'igono definido por el usuario.
+  \item Computar el algoritmo STAR para obtener \textbf{hasta} 3 horas previas de la que se desea calcular.
+  \item Completar la informaci'on del paso anterior con -1 en donde no se encuentre informaci'on usando la malla predefinida del paso 1.
+  \item Descargar las lecturas de las estaciones que se ubican dentro del pol'igono.
+  \item Correr el algoritmo \textbf{Asimilaci'on-Fortran}.
+  \item En caso de 'exito, subir la informaci'on nueva a la base de datos y graficarla
+  \item En caso de fracaso (informaci'on insuficiente), se debe graficar s'olo la informaci'on del algoritmo STAR.
+  \item Correr el an'alisis de error puntual para cada estaci'on dentro del pol'igono.
+\end{enumerate}
+ %Falta describir el algoritmo Asimilacion-Fortran
 
 \subsection{Productos generados}
 %archivo de precipitacion .debug
@@ -159,8 +186,8 @@ El programa genera un archivo con terminaci'on .debug que contiene la informaci'
 'Este archivo puede ser leído por programas de graficaci'on como gnuplot y matlab para su análisis.
 
 En la Figura 2.2 podemos observar un ejemplo de un archivo .debug. 'Este archivo
-consta de una cabecera que define las esquinas de la im'agen y una lista de vectores (x, y, precipitación). La
-lista de vectores definen una matriz regular ordenada por renglones.
+consta de una cabecera que define las esquinas de la pol'igono y una lista de vectores (x, y, precipitación). La
+lista de vectores define una matr'iz regular ordenada por renglones.
 
 \begin{figure}[h!]
  \centering
@@ -181,7 +208,7 @@ El objetivo de 'esta tabla consiste en generar inicialmente diagramas de dispers
 
 \begin{figure}[h!]
  \centering
- \includegraphics[width=170mm,bb=0 0 837 507]{./imagenes/archivoErrorAnalysis.jpg}
+ \includegraphics[width=170mm,bb=0 0 837 507]{./imagenes/archivoErrorAnalysis.png}
  % archivoErrorAnalysis.jpg: 837x507 pixel, 72dpi, 29.53x17.89 cm, bb=0 0 837 507
  \caption{Diagrama de dispersi'on}
 \end{figure}
@@ -189,7 +216,7 @@ El objetivo de 'esta tabla consiste en generar inicialmente diagramas de dispers
 En la figura 2.3 se muestra un diagrama de dispersi'on de las predicciones realizadas en cada paso ejecutado por el sistema.
 En el eje ${y}$ se representa la precipitaci'on en una hora en particular, 
 en el eje $x$ son representadas las estaciones que caen dentro de un poligono
-determinado.
+determinado. 
 
 
 %archivo de error sigma desv esta
@@ -201,8 +228,33 @@ El dise\~no de la base de datos geogr'afica responde a una serie de requerimient
 \begin{itemize}
  \item Debe guardar cada punto en su contexto espacial y temporal.
  \item Debe guardar la informaci'on de las estaciones de la CFE en su contexto espacial y temporal
- 
+ \item Debe guardar la informaci'on de precipitaci'on en cada punto.
 \end{itemize}
+
+En la Figura ... se muestra el diseño de la base de datos.
+
+\begin{figure}[h!]
+ \centering
+ \includegraphics[width=140mm]{./imagenes/DataBase.jpg}
+ % DataBase.jpg: 651x396 pixel, 72dpi, 22.97x13.97 cm, bb=0 0 651 396
+ \caption{Dise\~no de la Base de Datos Geogr'afica}
+\end{figure}
+
+El desempe\~no de la base de datos se ve mejorada ampliamente mediante el uso de 'indices. El incremento en la
+velocidad de acceso a la informaci'on se logra mediante la aplicaci'on de 'indices en los campos en donde
+se hacen las búsquedas m'as frecuentes.
+
+En 'este proyecto se relizaron 'indices sobre diferentes tablas:
+\begin{itemize}
+ \item 'Indice sobre el campo \textit{fecha} en la tabla \textit{LecturaTierra}
+  \item 'Indice sobre el campo \textit{id\_ventana} en la tabla \textit{PuntosVentana}
+  \item 'Indice sobre el campo \textit{fecha} en la tabla \textit{Interpoltxt}
+  \item 'Indice sobre el campo \textit{fecha} en la tabla \textit{Calculo}
+  \item 'Indice sobre el campo \textit{id\_ventana} en la tabla \textit{Calculo}
+  \item 'Indice geogr'afico sobre el campo \textit{punto} en la tabla \textit{Estacion}
+  \item 'Indice geogr'afico sobre el campo \textit{punto} en la tabla \textit{PuntosVentana}
+\end{itemize}
+
 
 
 \section{Dise\~no de la p'agina web}
