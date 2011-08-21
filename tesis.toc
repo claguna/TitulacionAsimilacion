@@ -8,17 +8,17 @@
 \contentsline {section}{\numberline {2.1}Obtener datos satelitales y lecturas pluviom'etricas}{6}{section.2.1}
 \contentsline {section}{\numberline {2.2}Dise\~no de la apliaci'on en C++/Fortran}{7}{section.2.2}
 \contentsline {subsection}{\numberline {2.2.1}Estandarizaci'on de la informaci'on}{8}{subsection.2.2.1}
-\contentsline {subsection}{\numberline {2.2.2}Descripci'on del argoritmo STAR}{8}{subsection.2.2.2}
+\contentsline {subsection}{\numberline {2.2.2}Descripci'on del argoritmo STAR}{9}{subsection.2.2.2}
 \contentsline {subsection}{\numberline {2.2.3}Descripci'on e implementaci'on del algoritmo Asimilaci'on}{10}{subsection.2.2.3}
-\contentsline {subsection}{\numberline {2.2.4}Productos generados}{11}{subsection.2.2.4}
-\contentsline {section}{\numberline {2.3}Dise\~no de la base de datos}{13}{section.2.3}
+\contentsline {subsection}{\numberline {2.2.4}Productos generados}{10}{subsection.2.2.4}
+\contentsline {section}{\numberline {2.3}Dise\~no de la base de datos}{12}{section.2.3}
 \contentsline {section}{\numberline {2.4}Dise\~no de la p'agina web}{15}{section.2.4}
-\contentsline {section}{\numberline {2.5}Pruebas de confiabilidad}{17}{section.2.5}
-\contentsline {chapter}{\numberline {3}Manuales de uso e instalaci'on}{18}{chapter.3}
-\contentsline {section}{\numberline {3.1}Dependencias}{18}{section.3.1}
-\contentsline {section}{\numberline {3.2}Instalaci'on}{18}{section.3.2}
+\contentsline {section}{\numberline {2.5}Pruebas de confiabilidad}{16}{section.2.5}
+\contentsline {chapter}{\numberline {3}Manuales de uso e instalaci'on}{17}{chapter.3}
+\contentsline {section}{\numberline {3.1}Dependencias}{17}{section.3.1}
+\contentsline {section}{\numberline {3.2}Instalaci'on}{17}{section.3.2}
 \contentsline {section}{\numberline {3.3}Preparaci'on de la Base de Datos}{18}{section.3.3}
-\contentsline {section}{\numberline {3.4}Uso de la aplicaci'on}{18}{section.3.4}
-\contentsline {chapter}{\numberline {4}Conlusiones}{19}{chapter.4}
-\contentsline {section}{\numberline {4.1}Escalabilidad}{19}{section.4.1}
-\contentsline {section}{\numberline {4.2}Trabajo Futuro}{19}{section.4.2}
+\contentsline {section}{\numberline {3.4}Uso de la aplicaci'on}{19}{section.3.4}
+\contentsline {chapter}{\numberline {4}Conlusiones}{21}{chapter.4}
+\contentsline {section}{\numberline {4.1}Escalabilidad}{21}{section.4.1}
+\contentsline {section}{\numberline {4.2}Trabajo Futuro}{21}{section.4.2}
