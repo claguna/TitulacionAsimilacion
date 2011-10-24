@@ -72,7 +72,7 @@
 % some defaults and labels
 \if@spanish
   \author{Falta nombre de autor}
-  \title{Tesis}
+  \title{Implementación de un modelos de estimación pluvial}
   \degree{Doctorado}
   \supervisor{Falta nombre del supervisor}
   \institution{Universidad de Alg\'un Sitio}

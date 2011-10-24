@@ -1,12 +1,8 @@
 
 \documentclass[oneside,numbers,spanish]{ezthesis}
 \usepackage{lastpage}
-\usepackage{float}
-
-
-\floatstyle{ruled}
-\newfloat{algorithm}{tbp}{loa}
-\floatname{algorithm}{Algorithm}
+\usepackage{algorithmic,algorithm}
+\usepackage{pdfpages}
 
 %% # Datos del documento #
 %% Nota que los acentos se deben escribir: \'a, \'e, \'i, etc.
@@ -33,6 +29,8 @@
 %% # Portada de la tesis #
 %% Mirar el archivo "titlepage.tex" para los detalles.
 
+\includepdf[pages=-]{portada}
+
 %% # Prefacios #
 %% Por cada prefacio (p.e. agradecimientos, resumen, etc.) crear
 %% un nuevo archivo e incluirlo aqu'i.
@@ -58,6 +56,10 @@
 %\include{capitulo2}
 %\include{capitulo3}
 \include{conclusiones}
+\begin{thebibliography}{1}
+ \bibitem{starsqueme} Jiawei Han et. al. {\em Data Mining: Concepts and Techniques (The Morgan Kaufmann Series in Data Management Systems)}  1991.
+\end{thebibliography}
+
 
 \appendix
 %% Cap'itulos incluidos despues del comando \appendix aparecen como ap'endices

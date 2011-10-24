@@ -8,7 +8,7 @@
   cada vez m'as veloces han atra'ido un gran inter'es en los sistemas parelos
   y distribu'idos.
   
-  Desde hace algunos a\~nos las tecnolog'ias de cómputo han sufrido un cambio significativo
+  Desde hace algunos años las tecnolog'ias de cómputo han sufrido un cambio significativo
   principalmente en la arquitectura. La imposibilidad de incrementar la velocidad del reloj
   interno de las computadoras debido al sobrecalentamiento y alto consumo enereg'etico
   de los procesadores llev'o a la industr'ia a dar por terminada la carrera de los ciclos de reloj.
@@ -17,9 +17,9 @@
   La nueva estrategia consiste en tener m'ultiples procesadores integrados en la misma estampa compartiendo los mismos
   cach'es de memoria o segmentando el cach'e para cada procesador individual.
   
-  Las nuevas apliaciones deben ser dise\~nadas y programadas de tal manera que exploten los beneficios de las
+  Las nuevas apliaciones deben ser diseñadas y programadas de tal manera que exploten los beneficios de las
   nuevas arquitecturas, es decir, coordinar procesos para distribuir el trabajo para as'i lograr mejorar el 
-  desempe\~no de los programas.
+  desempeño de los programas.
 
   La computaci'on en paralelo ha tenido un impacto amplio en una gran variedad 
   de areas desde simulaciones computacionales para aplicaciones cient'ificas
@@ -56,7 +56,7 @@ una cantidad de hilos que permitan calcular de manera independiente secciones de
 %% Escalabilidad de la base de datos
 \subsubsection*{Escalabilidad de la base de datos}
   %% Hacer calculos de almacenamiento por día y plantear el problema de escalabilidad y performance
-Las bases de datos comerciales como Oracle tienen una velocidad y eficiencia mucho mejor que MySQL
+Las tecnologías de bases de datos han evolucionado de manera muy rápida, especialmen
   %% Problemas del Modelo relacional y manejo de índices
   %% Escalabilidad usando BigTable o MangoBD o una BD distribuida  
 
