@@ -27,10 +27,10 @@ Se gener'o un instalador en bash que permite configurar el entorno y verificar l
 el programa.
 %ínstalación de la página web
 El desarrollo de la página web se realiz'o usando Netbeans 7.0. La instalaci'on de la p'agina en el servidor Tomcat requiere que
-simplemente se copie el archivo AsimilacionLluvias.war en la carpeta de apliaciones de Tomcat. Posteriormente el servidor 
+simplemente se copie el archivo AsimilacionLluvias.war en la carpeta de aplicaciones de Tomcat. Posteriormente el servidor 
 desempaquetar'a el archivo y la apliaci'on podr'a ser accedida.
 
-La aplicaci'on web usa internamente el programa en C++/Fortran para realizar los c'alculos numéricos. Por lo que hay que copiar
+La aplicaci'on web usa internamente el programa en C++/Fortran para realizar los c'alculos num'ericos. Por lo que hay que copiar
 la aplicaci'on num'erica en la direcci'on AsimilacionLluvias/web/Asimilacion y adem'as se deben poner los permisos adecuados para
 que el servidor web pueda ejecutar la apliaci'on.
 
@@ -47,7 +47,20 @@ y fecha en el formato YYYY-MM-DD HH:00:00. \\
 
 \textbf{Archivo de definici'on de estaciones} \\
 El archivo que define las estaciones est'a ligado con las cuencas disponibles. Una estaci'on siempre pertenecer'a a una cuenca.
-Los campos de 'este archivo son: Identificador de cuenca, Nombre, Longitud, Latutid
+Los campos de 'este archivo son: Identificador de cuenca, Nombre, Longitud, Latitud.\\
+
+\textbf{Archivos que definen la malla artificial}\\
+Para poder realizar las interpolaciones y guardar la informaci'on descargada en el sat'elite
+se crearon una serie de archivos que definen una malla artificial sobre la República Mexicana.
+La Figura 3.1 muestra uno de los 45 archivos archivos de texto que define la malla artificial, 'estos archivos
+no deben modificarse. 
+
+\begin{figure}[h!]
+ \centering
+ \includegraphics[width=110mm, bb=0 0 538 278]{./imagenes/mallaArificial.jpg}
+ % mallaArificial.jpg: 538x278 pixel, 72dpi, 18.98x9.81 cm, bb=0 0 538 278
+ \caption{Malla artificial para un sector de la República Mexicana}
+\end{figure}
 
 \subsubsection*{Creaci'on de la base de datos y carga de contenido}
 %Correr los scripts
@@ -73,7 +86,7 @@ familiarizados con 'este ambiente de desarrollo. Para lograr 'esto se us'o la bi
 \subsubsection*{Programa asimilacion2}
 A continuaci'on se lista la serie de opciones de la aplicaci'on
 \begin{center}
-  \begin{tabular}{|l|p{12cm}|}
+  \begin{tabular}{|l|p{9cm}|}
   \hline
   - -txt [ARCHIVO] & Sube a la base de datos un archivo de texto del sat'elite y verifica que la 
 		      informaci'on no se haya guardado previamente\\ \hline 
@@ -92,7 +105,7 @@ A continuaci'on se lista la serie de opciones de la aplicaci'on
 \subsubsection*{Programa asimilaciondb\_v1}
 A continuaci'on se lista la serie de opciones de la aplicaci'on.\\
 \begin{center}
-  \begin{tabular}{|l|p{12cm}|}
+  \begin{tabular}{|l|p{9cm}|}
   \hline
   - -station [ARCHIVO] & Sube a la base de datos un archivo que tiene las definiciones de las estaciones.\\ \hline 
   - -cuenca [ARCHIVO] & Sube a la base de datos un archivo csv que tiene definiciones de las cuencas\\ \hline

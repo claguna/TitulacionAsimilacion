@@ -59,15 +59,26 @@
   Entre las opciones existentes, se opt'o por usar GitHub pues provee de una plataforma web robusta y sobre todo segura. 
   Para 'este proyecto se us'o un repositorio privado que garantiza que s'olo los colaboradores autorizados puedan ver y modificar el c'odigo.
 
-  %Documentación usando doxygen
-  La documentaci'on detallada del c'odigo se realiz'o mediante doxygen. 'Esta herramienta sirve para generar
-  documentaci'on autom'aticamente mediante el uso de comentarios especiales en el c'odigo. El producto final es una p'agina web, un manual 
-  que puede ser visto con el comando man de UNIX y un documento PDF que detallan cada archivo, funci'on y m'odulo usado en el sistema.
-  
-
   Finalmente, existen dos bibliotecas que son utilizadas para realizar consultas
   a bases de datos MySQL. Una de ellas est'a implementada en C++ y la otra en C.
   Se eligi'o la biblioteca mysqlclient implementada en C por su facilidad de uso.
+
+%Documentación usando doxygen
+  \subsubsection*{Documentaci'on detallada del programa}
+  La documentaci'on detallada del c'odigo se realiz'o mediante Doxygen\footnote{http://www.doxygen.org/}. 
+'Esta herramienta sirve para escribir documentaci'on de programas escritos
+en diferentes lenguajes de programaci'on. Al igual que en Javadoc, la documentaci'on es escrita dentro del mismo c'odigo como comentarios, de 'esta manera 
+es relativamente sencillo de mantener actualizado. Doxygen permite realizar referencias cruzadas entre la documentaci'on y el c'odigo, por lo que es muy 
+sencillo ver directamente el c'odigo desde la documentaci'on.
+
+  El producto final es una p'agina web, un manual 
+  que puede ser visto con el comando man de UNIX y un documento PDF que detallan cada archivo, funci'on y m'odulo usado en el sistema.
+\begin{figure}[h!]
+ \centering
+ \includegraphics[width=150mm]{./imagenes/doxygen1.jpg}
+ % doxygen1.jpg: 896x435 pixel, 72dpi, 31.61x15.35 cm, bb=0 0 896 435
+\caption{P'agina web generada por Doxygen}
+\end{figure}
 
 \subsection{Estandarizaci'on de la informaci'on}
   %Mallas artificiales
@@ -89,7 +100,7 @@
   El siguiente paso fue implementar un algoritmo de interpolaci'on que tomara una im'agen satelital arbitraria y 
   ajustara su informaci'on a una malla contenedora.
 
-  C'omo se ilustra en la Figura 2.2, la informaci'on del sat'elite puede ser muy irregular. Para resolver el problema 
+  C'omo se ilustra en la Figura 2.3, la informaci'on del sat'elite puede ser muy irregular. Para resolver el problema 
   envolvemos la im'agen en la malla e interpolamos la informaci'on. Las zonas para las cuales no hay datos disponibles
   son rellenadas de valores -1 (Se acord'o que un valor negativo para las lluvias sería un buen indicador de que no hay
   informaci'on).
@@ -106,7 +117,7 @@
   pedir la malla adecuada a la base de datos fueron implementadas en C.
 
 \subsection{Descripci'on del argoritmo STAR}
-  El algoritmo STAR se encarga de transformar las temperaturas registradas por los satelites y las convierte
+  El algoritmo STAR\cite{star} se encarga de transformar las temperaturas registradas por los satelites y las convierte
   en una primer estimaci'on pluvial. Recibe como entrada una matr'iz de temperaturas y para cada punto $p$ de la matr'iz
   obtiene una vecindad de radio $50$ alrededor del punto. Para esta vecindad calcula la media x' y la desviaci'on estandard $\sigma$.
 
@@ -198,7 +209,6 @@ involucran a la tabla de hechos y a las de dimensiones (Las tablas que rodean a 
 A pesar de que la miner\'ia de datos usa el esquema estrella para realizar an\'alisi multidimiensional, las caracter\'isticas mencionadas 
 hacen que \'este dise\~no sea el ideal para realizar consultas a la base de datos geogr\'afica. 
 
-En la Figura 2.3 se muestra el dise\~no de la base de datos.
 
 \begin{figure}[h!]
  \centering
@@ -226,7 +236,7 @@ En \'este proyecto se relizaron \'indices sobre diferentes tablas:
 En la actualidad las arquitecturas de software m'as aceptadas y adoptadas en 
 el desarrollo web implementan la arquitectura llamada Modelo-Vista-Controlador (MVC).
 
-La arquitectura MVC intenta aislar tres componentes importantes en el desarrollo
+La arquitectura MVC\cite{jsf} intenta aislar tres componentes importantes en el desarrollo
 de una aplicaci'on web:
 
 \begin{itemize}
@@ -235,15 +245,16 @@ de una aplicaci'on web:
 \item \textbf{Controlador: } Recibe entradas del usuario e inicia la respuesta correspondiente haciendo llamadas al controlador.
 \end{itemize}
 
-Uno de los marcos de trabajo m'as ampliamente usados que implementan la arquitectura MVC es Java Server Faces (JSF). En JSF las
-peticiones del usuario son procesadas por un servidor que carga la vista apropiada, crea el 'arbol de componentes de la vista y
+Uno de los marcos de trabajo m'as ampliamente usados que implementan la arquitectura MVC es Java Server Faces\footnote{http://www.oracle.com/technetwork/java/javaee/javaserverfaces-139869.html}
+ (JSF). En JSF las peticiones del usuario son procesadas por un servidor que carga la vista apropiada, crea el 'arbol de componentes de la vista y
 procesa sus eventos. El estado de los componentes de la vista son guardados al final de una petici'on s'incrona o as'incrona al servidor.
 
 El usuario final experimenta una experiencia visual m'as eriquecedora mediante las llamadas as'incronas al servidor que atienden
 respuestas en tiempo real en el momento en que se interact'ua con la aplicaci'on. El valor agregado de JSF es la existencia de otros
 marcos de trabajo que incrementan la calidad visual de los componentes de la vista, tal es el caso de PrimeFaces.
 
-La p'agina web del presente proyecto se implement'o usando JSF y PrimeFaces para lograr una experiencia visual 'optima
+La p'agina web del presente proyecto se implement'o usando JSF 
+y PrimeFaces\footnote{http://www.primefaces.org/} para lograr una experiencia visual 'optima
 para que la aplicaci'on sea f'acil de usar y atractiva visualmente.
 
 \begin{figure}[!ht]
@@ -255,9 +266,25 @@ para que la aplicaci'on sea f'acil de usar y atractiva visualmente.
 
 
 La p'agina web permite seleccionar el rango de tiempo en donde se va a ejecutar el algoritmo. Se us'o Google Maps
-para ilustrar la distribuci'on geogr'afica de las estaciones y la selecci'on de un poligono definido por el usuario.
-La p'agina principal permite al usuario incluir las estaciones de cuencas disponibles para forzar que 
-sean consideradas en la correci'on num'erica. 
+para ilustrar la distribuci'on geogr'afica de las estaciones mediante marcas distintivas y la selecci'on de un poligono 
+definido por el usuario.
+La p'agina principal permite al usuario incluir las estaciones de cuencas disponibles para forzar que su informaci\'on 
+sean considerada en la correci'on num'erica. 
+
+
+\begin{figure}[ht!]
+ \centering
+ \includegraphics[width=180mm]{./imagenes/ejemploPagina1.jpg}
+ % ejemploPagina1.jpg: 1346x564 pixel, 72dpi, 47.48x19.90 cm, bb=0 0 1346 564
+ \caption{P'agina web ejecutando un c'alculo para un periodo de tiempo}
+\end{figure}
+
+\begin{figure}[h!]
+ \centering
+ \includegraphics[width=180mm]{./imagenes/ejemploPagina2.jpg}
+ % ejemploPagina2.jpg: 1411x662 pixel, 72dpi, 49.78x23.35 cm, bb=0 0 1411 662
+ \caption{P'agina mostrando el resultado del c'alculo solicitado}
+\end{figure}
 
 
 \section{Productos generados}
@@ -266,7 +293,7 @@ sean consideradas en la correci'on num'erica.
 El programa genera un archivo con terminaci'on .debug que contiene la informaci'on calculada de las lluvias.
 'Este archivo puede ser le'ido por programas de graficaci'on como gnuplot y matlab para su análisis.
 
-En la Figura 2.3 podemos observar un ejemplo de un archivo .debug. 'Este archivo
+En la Figura 2.8 podemos observar un ejemplo de un archivo .debug. 'Este archivo
 consta de una cabecera que define las esquinas de la pol'igono y una lista de vectores (x, y, precipitación). La
 lista de vectores define una matr'iz regular ordenada por renglones.
 
@@ -301,7 +328,7 @@ El archvio de estimaci'on puntual es un archivo .csv que contiene los siguientes
  \caption{Diagrama de dispersi'on}
 \end{figure}
 
-En la figura 2.4 se muestra un diagrama de dispersi'on de las predicciones realizadas en cada paso ejecutado por el sistema.
+En la figura 2.9 se muestra un diagrama de dispersi'on de las predicciones realizadas en cada paso ejecutado por el sistema.
 En el eje ${y}$ se representa la precipitaci'on en una hora en particular, 
 en el eje $x$ son representadas las estaciones que caen dentro de un pol'igono
 determinado. 
@@ -311,7 +338,7 @@ determinado.
 \subsection{Mapas de lluvia}
 
 Para poder presentar una im'agen de la estimaci'on pluvial probamos diferentes programas de graficaci'on, entre los cuales
-destacan gnuplot\footnote{http://www.gnuplot.info/} y grads\footnote{http://www.iges.org/grads/}.
+destacan gnuplot\footnote{http://www.gnuplot.info/} y GrADS\footnote{http://www.iges.org/grads/}.
 
 Se eligi'o usar GrADS, dise\~nado originalmente por \textit{ NASA Advanced Information Systems Research Program}, 
 pues es un programa de prop'osito espec'ifico para manipular y visualizar datos generados por las Ciencias 
@@ -319,9 +346,10 @@ de la Tierra. Por otra parte, gnuplot es un programa de uso generar para grafica
 lo hace poco eficiente para graficar nuestra informaci'on, en particular, el uso de curvas de nivel fue privativo en tiempo
 de ejecuci'on y en nivel de detalle de la im'agen.
 
-Se puede apeciar en la Figura 2.5 que GrADS nos permite integrar la ubicaci'on y estado de las estaciones,
+Se puede apeciar en la Figura 2.7 que GrADS nos permite integrar la ubicaci'on y estado de las estaciones,
 mostrando en rojo las aquellas que no poseen informaci'on, en verde las que si la poseen y en amarillo las que 
-tienen informaci'on incompleta.
+tienen informaci'on incompleta. Adicionalmente el graficador muestra la silueta de la Rep\'ublica Mexicana en negro y una escala de colores
+lateral que modela la cantidad de lluvia que est\'a cayendo sobre una regi\'on espec\'ifica.
 
 Directamente la im'agen generada por GrADS es un archivo eps \textit{Encapsulated PostScript}, sin embargo a pesar de la buena calidad
 de las im'agenes eps, se debi'o convertir a el formato jpg para conservar la compatibilidad con los navegadores web.
@@ -335,7 +363,7 @@ de las im'agenes eps, se debi'o convertir a el formato jpg para conservar la com
 
 La generaci'on de im'agenes fue de vital importancia para poder notar detalles desicivos entre una cantidad enorme de datos.
 El uso de im'agenes nos permiti'o observar que las im'agenes satelitales que provee la \textit{NOAA} abarcaban una zona mucho
-m'as peque\~na que la que se solicit'o.
+m'as peque\~na que la que se solicit'o. La Figura 2.11 muestra una im\'agen que no posee suficiente informaci\'on
 
 \begin{figure}[h!]
  \centering

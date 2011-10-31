@@ -36,14 +36,32 @@ que el servidor web pueda ejecutar la apliaci'on.
 
 \section{Preparaci'on de la Base de Datos}
 \subsubsection*{Archivos separados por comas}
-El primer paso es crear los archivos csv que se van subir a la base de datos. Existen tres tipos de archivos que pueden ser usados:
+El primer paso es crear los archivos csv que se subir'an a la base de datos. Existen tres tipos de archivos que pueden ser usados: \\
+
 \textbf{Archivo de Cuencas} \\
-'Este archivo es sumamente sencillo pues consta de un identificador num'erico 'unico y el nombre de la cuenca.
+'Este archivo es sumamente sencillo pues consta de un identificador num'erico 'unico y el nombre de la cuenca. \\
 
-\textbf{Archivo de Lecuras de estaciones en tierra}  \\
+\textbf{Archivo de lecuras de estaciones en tierra}  \\
 'Este archivo consta de los siguientes campos: Identificador 'unico, identificador de la estaci'on que realiz'o la lectura, precipitaci'on
-y fecha en el formato YYYY-MM-DD HH:00:00.
+y fecha en el formato YYYY-MM-DD HH:00:00. \\
 
+\textbf{Archivo de definici'on de estaciones} \\
+El archivo que define las estaciones est'a ligado con las cuencas disponibles. Una estaci'on siempre pertenecer'a a una cuenca.
+Los campos de 'este archivo son: Identificador de cuenca, Nombre, Longitud, Latutid
+
+\textbf{Archivos que definen la malla artificial}\\
+
+Para poder realizar las interpolaciones y guardar la informaci'on descargada en el sat'elite
+se crearon una serie de archivos que definen una malla artificial sobre la República Mexicana.
+La malla artificial se divide en 45 archivos de texto que definen un sector de la malla, 'estos archivos
+no deben modificarse.
+
+\begin{figure}[h!]
+ \centering
+ \includegraphics[width=140mm, bb=0 0 538 278]{./imagenes/mallaArificial.jpg}
+ % mallaArificial.jpg: 538x278 pixel, 72dpi, 18.98x9.81 cm, bb=0 0 538 278
+ \caption{Malla artificial para un sector de la República Mexicana}
+\end{figure}
 
 \subsubsection*{Creaci'on de la base de datos y carga de contenido}
 %Correr los scripts
@@ -67,9 +85,27 @@ familiarizados con 'este ambiente de desarrollo. Para lograr 'esto se us'o la bi
 
 
 \subsubsection*{Programa asimilacion2}
+A continuaci'on se lista la serie de opciones de la aplicaci'on
+\begin{center}
+  \begin{tabular}{|l|p{12cm}|}
+  \hline
+  - -txt [ARCHIVO] & Sube a la base de datos un archivo de texto del sat'elite y verifica que la 
+		      informaci'on no se haya guardado previamente\\ \hline 
+  - -txtu [ARCHIVO] & Sube a la base de datos un archivo de texto del sat'elite sin verificar que 
+		      la informaci'on sea consistente. Esta opci'on permite la carga m'as r'apida del archivo pero se debe estar seguro que
+		      la informaci'on del mismo no est'e previamente en la base de datos\\ \hline
+  - -a1 & Indica que se va a calcular el algoritmo Asimilaci'on \\ \hline
+  - -rr & Indica que se quiere calcular la primer estimaci'on de lluvia \\ \hline
+  - -fpolygon [ARCHIVO] & Indica donde est'a guardado el archivo que define el poligono que se usar'a para realizar el c'alculo \\ \hline
+  - -date [YYYY-MM-DD HH] & Indica que fecha y hora se desea calcular \\ \hline
+  - -outputdir [ARCHIVO] & Indica en que directorio se va a guardar los productos del c'alculo \\ \hline
+  - -asHour [N] & Indica que se usar'an N horas previas para correr Asimilaci'on \\ \hline 
+  \end{tabular} 
+\end{center}
+
+\subsubsection*{Programa asimilaciondb\_v1}
 A continuaci'on se lista la serie de opciones de la aplicaci'on.\\
 \begin{center}
-
   \begin{tabular}{|l|p{12cm}|}
   \hline
   - -station [ARCHIVO] & Sube a la base de datos un archivo que tiene las definiciones de las estaciones.\\ \hline 
@@ -78,4 +114,3 @@ A continuaci'on se lista la serie de opciones de la aplicaci'on.\\
   \hline 
   \end{tabular} 
 \end{center}
-\subsubsection*{Programa asimilaciondb\_v1}
