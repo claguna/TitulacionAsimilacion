@@ -97,12 +97,33 @@ sencillo ver directamente el c'odigo desde la documentaci'on.
   de manera din'amica los puntos que se deben considerar para cualquier pol'igono. 
 
   El siguiente paso fue implementar un algoritmo de interpolaci'on que tomara una im'agen satelital arbitraria y 
-  ajustara su informaci'on a una malla contenedora\footnote{Algoritmo implementado por Adri'an Tovar}.
+  ajustara su informaci'on a una malla contenedora\footnote{Algoritmo
+    implementado por Adri'an Tovar}.
 
-  Como se ilustra en la Figura 2.3, la informaci'on del sat'elite puede ser muy irregular. Para resolver el problema 
+ Como se ilustra en la Figura 2.3, la informaci'on del sat'elite puede ser muy irregular. Para resolver el problema 
   envolvemos la im'agen en la malla e interpolamos la informaci'on. Las zonas para las cuales no hay datos disponibles
   son rellenadas de valores -1 (Se acord'o que un valor negativo para las lluvias sería un buen indicador de que no hay
   informaci'on).
+
+  El algoritmo de interpolaci'on se describe a continuaci'on:
+
+  \begin{enumerate}
+    \item Leer informaci'on del sat'elite y construir un arreglo de
+      de las filas que conforman la im'agen.
+    \item Para cada punto $x$ en la malla artificial se obtienen los
+      cuatro puntos de la im'agen satelital que forman el cuadil'atero
+      m'as peque\~no tal que  $x$ est'a dentro del cuadril'atero.
+    \item Para realizar la interpolaci'on se requieren s'olo tres
+      puntos, por lo que debemos eliminar uno de los puntos del
+      cuadril'atero. Un cuadril'atero induce 2 tri'angulos. Se debe
+      saber dentro de qu'e tri'angulo se encuentra el punto $x$. Para
+      saberlo se usa un algoritmo que determina si un punto se
+      encuentra dentro de un pol'igono usando el Teorema de la curva
+      de Jordan.
+    \item Finalmente, teniendo el tri'angulo m'as peque\~no que
+      envuelve a un punto $x$ se puede calcular la ecuaci'on de un
+      plano que pasa por esos tres puntos.
+  \end{enumerate}
 
   %%Hacer una imagen de como podría estar la imágen satelital y como se encierra dicha im'agen en una malla artificial
   \begin{figure}[h!]
@@ -178,8 +199,13 @@ El algoritmo trimean es el siguiente:
  TM=\frac{Q_1+2Q_2+Q_3}{4}
 \end{equation} 
 
+%% Algoritmo Asimilación
 \subsection{Descripci'on e implementaci'on del algoritmo \\Asimilaci'on}
-El algoritmo Asimilaci'on realiza una serie de pasos que se detallan a continuaci'on:
+
+El algoritmo Asimilaci'on se encarga de realizar un ajuste de los
+datos calculados usando el algoritmo STAR. A continuaci'on se
+describe el algoritmo.
+
 \begin{enumerate}
  \item Descargar la malla predefinida para el pol'igono solicitado por el usuario.
   \item Computar el algoritmo STAR para obtener \textbf{hasta} 3 horas previas de la que se desea calcular.
@@ -190,8 +216,37 @@ El algoritmo Asimilaci'on realiza una serie de pasos que se detallan a continuac
   \item En caso de fracaso (informaci'on insuficiente), se debe graficar s'olo la informaci'on del algoritmo STAR.
   \item Correr el an'alisis de error puntual para cada estaci'on dentro del pol'igono.
 \end{enumerate}
- %Falta describir el algoritmo Asimilacion-Fortran
 
+%Falta describir el algoritmo Asimilacion-Fortran
+\subsubsection*{Algoritmo Asimilaci'on-Fortran}
+El algoritmo Asimilaci'on-Fortran realiza los siguientes pasos:
+\begin{enumerate}
+  \item Dada la informaci'on de las estaciones en tierra, es necesario
+    interpolar el valor obtenido del algoritmo STAR para el mismo
+    punto y as'i, obtener el error: $Eror=ValorReal-ValorSTAR$ 
+  \item Se promedian los errores por unidad de lluvia. Los valores
+    posibles de lluvia toman valores en el intervalo de enteros:
+    $[1,75]$. Los errores son clasificados y promedidados usando este
+    intervalo para generar una gr'afica entre lluvia y errores. 
+  \item Usando 'esta gr'afica se ajusta una l'inea con m'inimos cuadrados
+    para obtener una pendiente $m$ y una ordenada al origen $b$, el
+    algoritmo establece que $m \in (-\infty , 2]$ y $b \in [-.1
+        ,.5]$. \\
+    El valor resultado de la asimilaci'on se calcula siguiendo
+    haciendo uso de las siguientes ecuaciones:\\
+    Se sabe que: $ValorAsimilacion - ValorSTAR = Error$\\
+    Por otra parte $Error = ValorStar*m+b$, por lo tanto\\
+    $ValorAsimilado-ValorSTAR=ValorSTAR*m+b$ \\
+    Finalmente $ValorAsimilado = (m+1)ValorSTAR+b$\\
+    Cuando no se puede ajustar una l'inea porque s'olo existe un
+    punto entonces s'olo se suma el valor de la coordenada $x$ del
+    punto, as'i: $ValorAsimilado=ValorSTAR+x(punto)$
+\end{enumerate}
+
+El principal problema con 'este algoritmo es que no es muy funcional
+si no existe informaci'on de las estaciones en tierra o si las
+lecturas de las estaciones entran dentro del mismo rango de lluvia
+debido a que el paso 2 promedia las lecturas por unidad de lluvia.
 
 \section{Dise\~no de la base de datos}
 
