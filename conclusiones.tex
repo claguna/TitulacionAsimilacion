@@ -8,16 +8,16 @@
   cada vez m'as veloces han atra'ido un gran inter'es en los sistemas parelos
   y distribu'idos.
   
-  Desde hace algunos a\~nos las tecnolog'ias de cómputo han sufrido un cambio significativo
+  Desde hace algunos a\~nos las tecnolog'ias de c'omputo han sufrido un cambio significativo
   principalmente en la arquitectura. La imposibilidad de incrementar la velocidad del reloj
-  interno de las computadoras debido al sobrecalentamiento y alto consumo enereg'etico
+  interno de las computadoras debido al sobrecalentamiento y alto consumo energ'etico
   de los procesadores llev'o a la industr'ia a dar por terminada la carrera de los ciclos de reloj.
   Es as'i como surge la era de los procesadores multin'ucleo.
 
   La nueva estrategia consiste en tener m'ultiples procesadores integrados en la misma estampa compartiendo los mismos
   cach'es de memoria o segmentando el cach'e para cada procesador individual.
   
-  Las nuevas apliaciones deben ser dise\~nadas y programadas de tal manera que exploten los beneficios de las
+  Las nuevas aplicaciones deben ser dise\~nadas y programadas de tal manera que exploten los beneficios de las
   nuevas arquitecturas, es decir, coordinar procesos para distribuir el trabajo para as'i lograr mejorar el 
   desempe\~no de los programas.
 
@@ -41,7 +41,7 @@
 
   \subsubsection*{Aplicaci'on del paralelismo para un trabajo futuro}
   
-Como hemos visto, la implementaci'on actual maneja una zona amplia pero muy determinada en la que el programa puede realizar 
+Como hemos visto, la implementaci'on actual maneja una zona espacial amplia pero muy determinada en la que el programa puede realizar 
 el c'alculo de precipitaci'on.
 
 Un trabajo futuro implica ampliar la zona y el n'umero de horas guardadas en la base de datos. La gran cantidad de informaci'on
@@ -55,8 +55,25 @@ una cantidad de hilos que permitan calcular de manera independiente secciones de
 
 %% Escalabilidad de la base de datos
 \subsubsection*{Escalabilidad de la base de datos}
-  %% Hacer calculos de almacenamiento por día y plantear el problema de escalabilidad y performance
-Las bases de datos comerciales como Oracle tienen una velocidad y eficiencia mucho mejor que MySQL
+  %% Hacer calculos de almacenamiento por día y plantear el problema
+  %% de escalabilidad y performance
+Se realiz'o un an'alisis del desempe\~no del programa para saber qu'e
+actividades son las que toman m'as tiempo en el procesamiento de
+una im'agen satelital. El resultado fue que la activdad m'as
+demandante es el acceso a la informaci'on de la base de datos lo cual
+incluye la consulta de puntos dentro de un pol'igono para un tiempo
+determinado y la transferencia de los datos para ser procesados. 
+
+Las bases de datos comerciales como Oracle tienen una velocidad y
+eficiencia mucho mejor que MySQL. 'Estas mejoras se logran por medio
+de una implementaci'on inteligente que combina no s'olo la velocidad
+del procesador si no tambi'en la arquitectura en la cu'al se monta la
+base de datos.
+
+En un trabajo futuro en el que se maneje una cantidad de informaci'on
+mucho mayor, el papel del sistema manejador que se seleccione ser'a de
+vital importancia. 
+
   %% Problemas del Modelo relacional y manejo de índices
   %% Escalabilidad usando BigTable o MangoBD o una BD distribuida  
 
@@ -64,7 +81,7 @@ Las bases de datos comerciales como Oracle tienen una velocidad y eficiencia muc
   %% El acceso paralelo no es problema, pero si la capacidad del server
   %% Escalabilidad de tecnologías mediante una Implementación en GWT vs JSF y Primefaces
 
-\section{Trabajo Futuro}
+%%\section{Trabajo Futuro}
 
 %% Implementación del segundo algoritmo
 

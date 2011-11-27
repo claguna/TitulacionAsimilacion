@@ -3,16 +3,17 @@
 \section{Obtener datos satelitales y lecturas \\ pluviom'etricas}
 
   La  \textit{National Oceanic and Atmospheric Administration} (NOAA) es una agencia federal Estadounidense que se encarga de 
-  monitorear las condiciones oce'anicas y atmosf'erica por medio de sus sat'elites.
-  En particular, los sat'elites geoestacionarios GOES 11 y 12 toman imagenes en infrarrojo de las nubes que est'an sobre
+  monitorear las condiciones oce'anicas y atmosf'ericas por medio de sus sat'elites.
+  En particular, los sat'elites geoestacionarios GOES 11 y 12 toman im'agenes en infrarrojo de las nubes que est'an sobre
   el territorio Mexicano.
 
   Para 'este proyecto pedimos a la NOAA que nos proporcionara informaci'on de una zona amplia del sur del pa'is en 
-  intervalos de tiempo, en los cuales, se presentaron fen'omenos de importancia de inundaciones en la zona de Tabasco.
+  intervalos de tiempo, en los cuales, se presentaron fen'omenos de
+  importancia de inundaciones en la zona de sur de M'exico.
 
   Es necesario que se procese la informaci'on que se descarga directamente de los servidores de la NOAA. Para ello se usa
   una aplicaci'on llamada \textit{NOAAA Weather and Climate Toolkit} para generar archivos de texto plano que contiene
-  toda la informaci'on de cada punto le'ido.
+  toda la informaci'on para punto le'ido.
 
   \begin{figure}[h!]
   \centering
@@ -40,21 +41,23 @@
   programas muy r'apidos.
 
   Por otra parte, C/C++ es un lenguaje de prop'osito general que permite al programador trabajar en tareas que requieren
-  el uso de estructuras de datos y el acceso a los servicios del sistema operativo, por ejemplo, manejar archivos, memoria y hacer 
+  el uso de estructuras de datos complejas y el acceso a los servicios del sistema operativo, por ejemplo: Manejar archivos, memoria y hacer 
   conexiones a bases de datos.
 
   La combinaci'on de ambos lenguajes se realiza mediante la definici'on de m'etodos externos de C. De 'esta manera, es posible
-  usar lo mejor de 'estos lenguajes obteniendo resultados eficientes usando una programaci'on sencilla.
+  usar lo mejor de ambos lenguajes obteniendo resultados eficientes usando una programaci'on sencilla.
 
   %Uso de un IDE
-
+  \subsubsection{Entorno de desarrollo}
   Los entornos de desarrollo integrados (EDI) son herramientas sumamente 'utiles en la implementaci'on de proyectos de software.
   Los EDI son aplicaciones que consisten de un editor de c'odigo, un compilador, un depurador y una interfaz gr'afica.
 
-  Para 'este proyecto se adopt'o Netbeans\footnote{www.netbeans.org/} en su versi'on 7 pues es uno de los EDI m'as aceptados y f'aciles de usar. La integraci'on
-  que posee con C y Fortran hace que la programaci'on sea f'acil.
+  Para 'este proyecto se adopt'o Netbeans\footnote{www.netbeans.org/}
+  en su versi'on 7 pues es uno de los EDI's m'as aceptados y f'aciles
+  de usar. La integraci'on que posee con C++ y Fortran hace que la programaci'on sea f'acil.
 
   %uso de gitHub
+  \subsubsection*{Control de versiones}
   En cualquier proyecto de desarrollo de software es indispensable contar con un control de versiones del c'odigo.
   Entre las opciones existentes, se opt'o por usar GitHub\footnote{https://github.com} pues provee de una plataforma web robusta y sobre todo segura. 
   Para 'este proyecto se us'o un repositorio privado que garantiza que s'olo los colaboradores autorizados puedan ver y modificar el c'odigo.
@@ -91,7 +94,7 @@ sencillo ver directamente el c'odigo desde la documentaci'on.
   de tal manera que se contara con im'agenes consistentes y regulares.
 
   La soluci'on adoptada fue dividir el territorio nacional en intervalos predefinidos para generar una malla regular
-  a la cual se podía ajustar la informaci'on de los satélites.
+  a la cual se pod'ia ajustar la informaci'on de los sat'elites.
 
   Una vez definida la malla, se subi'o su informaci'on a la base de datos para poder obtener 
   de manera din'amica los puntos que se deben considerar para cualquier pol'igono. 
@@ -102,20 +105,21 @@ sencillo ver directamente el c'odigo desde la documentaci'on.
 
  Como se ilustra en la Figura 2.3, la informaci'on del sat'elite puede ser muy irregular. Para resolver el problema 
   envolvemos la im'agen en la malla e interpolamos la informaci'on. Las zonas para las cuales no hay datos disponibles
-  son rellenadas de valores -1 (Se acord'o que un valor negativo para las lluvias sería un buen indicador de que no hay
-  informaci'on).
+  son rellenadas de valores -1 pues se acord'o que un valor negativo para las lluvias ser'ia un buen indicador de que no hay
+  informaci'on.
 
   El algoritmo de interpolaci'on se describe a continuaci'on:
 
   \begin{enumerate}
     \item Leer informaci'on del sat'elite y construir un arreglo de
-      de las filas que conforman la im'agen.
+      las filas que conforman la im'agen.
     \item Para cada punto $x$ en la malla artificial se obtienen los
       cuatro puntos de la im'agen satelital que forman el cuadil'atero
       m'as peque\~no tal que  $x$ est'a dentro del cuadril'atero.
     \item Para realizar la interpolaci'on se requieren s'olo tres
       puntos, por lo que debemos eliminar uno de los puntos del
-      cuadril'atero. Un cuadril'atero induce 2 tri'angulos. Se debe
+      cuadril'atero que contiene al punto $x$. 
+      Un cuadril'atero induce 2 tri'angulos, por lo que se debe
       saber dentro de qu'e tri'angulo se encuentra el punto $x$. Para
       saberlo se usa un algoritmo que determina si un punto se
       encuentra dentro de un pol'igono usando el Teorema de la curva
@@ -130,14 +134,14 @@ sencillo ver directamente el c'odigo desde la documentaci'on.
   \centering
   \includegraphics[width=100mm,bb=0 0 502 388]{./imagenes/malla.jpg}
   % malla.jpg: 502x388 pixel, 72dpi, 17.71x13.69 cm, bb=0 0 502 388
-  \caption{Interpolaci'on de las imagenes satelitales}
+  \caption{Interpolaci'on de las im'agenes satelitales}
   \end{figure}
 
   El programa de interpolaci'on fue implementado en Fortran mientras que las subrutinas para 
   pedir la malla adecuada a la base de datos fueron implementadas en C.
 
 \subsection{Descripci'on del argoritmo STAR}
-  El algoritmo STAR\cite{star} se encarga de transformar las temperaturas registradas por los satelites y las convierte
+  El algoritmo STAR\cite{star} se encarga de transformar las temperaturas registradas por los sat'elites y las convierte
   en una primer estimaci'on pluvial. Recibe como entrada una matr'iz de temperaturas y para cada punto $p$ de la matr'iz
   obtiene una vecindad de radio $50$ alrededor del punto. Para esta vecindad calcula la media x' y la desviaci'on estandard $\sigma$.
 
@@ -230,9 +234,9 @@ El algoritmo Asimilaci'on-Fortran realiza los siguientes pasos:
     intervalo para generar una gr'afica entre lluvia y errores. 
   \item Usando 'esta gr'afica se ajusta una l'inea con m'inimos cuadrados
     para obtener una pendiente $m$ y una ordenada al origen $b$, el
-    algoritmo establece que $m \in (-\infty , 2]$ y $b \in [-.1
-        ,.5]$. \\
-    El valor resultado de la asimilaci'on se calcula siguiendo
+    algoritmo establece que $m \in (-\infty , 2]$ y $b \in [-0.1
+        , 0.5]$. \\
+    El valor resultado de la asimilaci'on se calcula
     haciendo uso de las siguientes ecuaciones:\\
     Se sabe que: $ValorAsimilacion - ValorSTAR = Error$\\
     Por otra parte $Error = ValorStar*m+b$, por lo tanto\\
